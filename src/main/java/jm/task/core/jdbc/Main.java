@@ -1,16 +1,13 @@
 package jm.task.core.jdbc;
-
-import com.mysql.cj.jdbc.ConnectionImpl;
-import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
+import jm.task.core.jdbc.service.UserService;
 import jm.task.core.jdbc.service.UserServiceImpl;
 import jm.task.core.jdbc.util.Util;
 
-import java.sql.Connection;
-import java.util.Scanner;
 
-public class Main  {
+
+public class Main extends Util  {
     public static void main(String[] args) {
-        UserServiceImpl service = new UserServiceImpl();
+        UserService service = new UserServiceImpl();
         service.createUsersTable();
         service.saveUser("Ivan", "Ivanov", (byte) 32);
         service.saveUser("Nikita", "Zakurdaev", (byte) 24);
@@ -19,5 +16,7 @@ public class Main  {
         service.getAllUsers();
         service.cleanUsersTable();
         service.dropUsersTable();
+
+
     }
 }

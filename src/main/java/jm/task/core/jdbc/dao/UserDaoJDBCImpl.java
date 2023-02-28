@@ -2,13 +2,15 @@ package jm.task.core.jdbc.dao;
 
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
+import org.hibernate.SessionFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDaoJDBCImpl extends Util implements UserDao {
-    private Connection connection = getConnection();
+public class UserDaoJDBCImpl extends Util  implements UserDao {
+    Connection  connection = getConnection();
+
 
     public UserDaoJDBCImpl() {
 
@@ -42,16 +44,9 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
             preparedStatement.setByte(3, age);
             preparedStatement.executeUpdate();
             System.out.println("User с именем – " + name + " добавлен в базу данных");
-            connection.commit();
+
         } catch (SQLException e) {
             e.printStackTrace();
-            if (connection != null) {
-                try {
-                    connection.rollback();
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
-            }
         }
     }
 
@@ -59,18 +54,14 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
         try (PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM USER WHERE ID=?")) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
-            connection.commit();
+
         } catch (SQLException e) {
             e.printStackTrace();
-            if (connection != null) {
-                try {
-                    connection.rollback();
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
+
                 }
-            }
-        }
     }
+
+
 
 
     public List<User> getAllUsers() {
